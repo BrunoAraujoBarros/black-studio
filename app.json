@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "black-studio",
-    "slug": "black-studio",
+    "name": "BlackStudioAndroid",
+    "slug": "BlackStudioAndroid",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

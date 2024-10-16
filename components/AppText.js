@@ -10,6 +10,5 @@ export function AppText({inputText, stylesLing, onPress, placeholder, numberOfLi
 const styles = StyleSheet.create({
     fonts:{
         fontSize: 15,
-        fontFamily:Platform.OS === "android" ? "Lato" : "Roboto"
     }
 })

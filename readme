@@ -1,6 +1,18 @@
 (NPX EXPO START)
 
+exemplos:
 
+conta adm:
+blackstudio@gmail.com
+senha: 123456
+
+conta cliente1
+cliente1@gmail.com
+senha: 123456
+
+conta cliente2
+cliente2@gmail.com
+senha: 123456
 
 Descrição Geral
 Esse código implementa uma tela de chat utilizando:

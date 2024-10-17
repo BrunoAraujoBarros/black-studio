@@ -15,14 +15,14 @@ export default function Home({ navigation }) {
     });
   };
 
-  const getUsers = async () => {
+  const getUsers = () => {
     const currentUser = autenticacao.currentUser;
 
-    if (!currentUser) return; 
+    if (!currentUser) return () => {}; // Verifica se o usuário está autenticado
 
     const docsRef = collection(db, 'usuarios');
-
     let q;
+
     if (currentUser.email === 'blackstudio@gmail.com') {
       // Se for a conta "blackstudio", exibe todos os usuários, menos ele próprio
       q = query(docsRef, where('idusuario', '!=', currentUser.uid));
@@ -31,17 +31,22 @@ export default function Home({ navigation }) {
       q = query(docsRef, where('email', '==', 'blackstudio@gmail.com'));
     }
 
+
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map((doc) => doc.data());
       setUsuarios(data);
     });
 
-    return unsubscribe;
+    return unsubscribe; 
   };
 
   useEffect(() => {
     const unsubscribe = getUsers();
-    return () => unsubscribe && unsubscribe(); 
+    return () => {
+      if (typeof unsubscribe === 'function') {
+        unsubscribe(); 
+      }
+    };
   }, []);
 
   return (

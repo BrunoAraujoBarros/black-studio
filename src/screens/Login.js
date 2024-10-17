@@ -10,7 +10,7 @@ export default function Login({ navigation }) {
 
     const loginUsuario = async (navigation) => {
         signInWithEmailAndPassword(autenticacao, email, senha)
-        .then(()=> console.log('user logged in'))
+        .then(()=> console.log('Usuário Logado'))
     }
     
     useEffect(() => {
@@ -18,7 +18,7 @@ export default function Login({ navigation }) {
             if(user){
                 navigation.navigate('Home')
             }else{
-                console.log('no user')
+                console.log('Sem Usuário')
             }
         })
     },[])

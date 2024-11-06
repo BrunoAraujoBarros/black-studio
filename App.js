@@ -70,22 +70,23 @@ import Registro from './src/screens/Registro';
 import Home from './src/screens/Home';
 import Chat from './src/screens/Chat';
 import Appointments from './src/screens/Appointments'; // Importa a tela de agendamentos
+import Welcome from './src/screens/Welcome';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Login">
+            <Stack.Navigator initialRouteName="Welcome">
                 <Stack.Screen
                     name="Login"
                     component={Login}
-                    options={{ headerShown: true }}
+                    options={{headerShown: false}}
                 />
                 <Stack.Screen
                     name="Registro"
                     component={Registro}
-                    options={{ headerShown: true }}
+                    options={{ headerShown: false }}
                 />
 
                 <Stack.Screen
@@ -108,6 +109,12 @@ export default function App() {
                         headerTitleStyle: { fontWeight: 'bold' },
                         headerTitleAlign: 'center'
                     })}
+                />
+
+                <Stack.Screen
+                    name="Welcome"
+                    component={Welcome}
+                    options={{headerShown: false}}
                 />
 
                 {/* Adiciona a tela de agendamentos */}

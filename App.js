@@ -94,6 +94,7 @@ export default function App() {
                     component={Home}
                     options={{
                         headerBackVisible: false,
+                        headerShown: false,
                         title: 'Usuários',
                         headerTitleAlign: 'center',
                         headerTitleStyle: { fontWeight: '900' }

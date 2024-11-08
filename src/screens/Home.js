@@ -82,6 +82,7 @@ import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { autenticacao, db } from '../../firebase/fiirebaseconfig';
 import { Listitem } from '../../components/Listitem';
 import { Button } from 'react-native-elements';
+import * as Animatable from 'react-native-animatable';
 
 export default function Home({ navigation }) {
   const [usuarios, setUsuarios] = useState([]);
@@ -126,36 +127,78 @@ export default function Home({ navigation }) {
   }, []);
 
   return (
-      <>
-        <FlatList
-            data={usuarios}
-            keyExtractor={(item) => item.email}
-            renderItem={({ item }) => (
-                <Listitem
-                    onPress={() =>
-                        navigation.navigate('Chat', {
-                          name: item.nomedeusuario,
-                          uid: item.idusuario,
-                        })
-                    }
-                    title={item.nomedeusuario}
-                    subTitle={item.email}
-                    image={item.avatarURL}
-                />
-            )}
-        />
-        <View style={styles.buttonContainer}>
-          <Button title="Agendar Serviço" onPress={() => navigation.navigate('Appointments')} />
-          <Button title="Desconectar da Conta" onPress={logoutUsuario} />
-        </View>
-      </>
+    <>
+    <View style={styles.container}>
+      <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
+                  <Text style={styles.message}>Entre em contato</Text>
+      </Animatable.View>
+
+
+    <View style={styles.containerList}>
+    <FlatList
+        data={usuarios}
+        keyExtractor={(item) => item.email}
+        renderItem={({ item }) => (
+            <Listitem
+                onPress={() =>
+                    navigation.navigate('Chat', {
+                      name: item.nomedeusuario,
+                      uid: item.idusuario,
+                    })
+                }
+                title={item.nomedeusuario}
+                subTitle={item.email}
+                image={item.avatarURL}
+            />
+        )}
+    />
+    </View>
+    <Animatable.View animation='fadeInUp' style={styles.buttonContainer}>
+      <Button title="Agendar Serviço" onPress={() => navigation.navigate('Appointments')} buttonStyle={styles.button} />
+      <Button title="Desconectar da Conta" onPress={logoutUsuario} buttonStyle={styles.button} />
+    </Animatable.View>
+    </View>
+</>
   );
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    margin: 10,
+    container: {
+      flex: 1,
+      backgroundColor: '#000000',
+    },
+    containerHeader: {
+      marginTop: '14%',
+      marginBottom: '8%',
+      paddingStart: '5%',
+  },
+    containerList: {
+     
+        flex:2,
+        backgroundColor: '#000000',
+        justifyContent:'center',
+        alignItems: 'center',
+        
+
+    },
+    buttonContainer: {
+      paddingTop: '5%',
+      backgroundColor: '#FFF',
+      flex: 1,
+      borderTopLeftRadius: 25,
+      borderTopRightRadius: 25,
+      paddingStart: '5%',
+      paddingEnd: '5%',
+    },
+    button: {
+        backgroundColor: '#142E66',
+        borderRadius: 4,
+        marginTop: 10,
+        marginHorizontal: 5,
+    },
+    message: {
+      fontSize: 28,
+      fontWeight: 'bold',
+      color: '#FFF',
   },
 });

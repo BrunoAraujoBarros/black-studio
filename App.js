@@ -69,8 +69,10 @@ import Login from './src/screens/Login';
 import Registro from './src/screens/Registro';
 import Home from './src/screens/Home';
 import Chat from './src/screens/Chat';
-import Appointments from './src/screens/Appointments'; // Importa a tela de agendamentos
+import Appointments from './src/screens/Appointments';
 import Welcome from './src/screens/Welcome';
+import Portfolio from './src/screens/Portfolio';
+import AdminPortfolio from './src/screens/AdminPortfolio';
 
 const Stack = createNativeStackNavigator();
 
@@ -88,7 +90,6 @@ export default function App() {
                     component={Registro}
                     options={{ headerShown: false }}
                 />
-
                 <Stack.Screen
                     name="Home"
                     component={Home}
@@ -100,7 +101,6 @@ export default function App() {
                         headerTitleStyle: { fontWeight: '900' }
                     }}
                 />
-
                 <Stack.Screen
                     name="Chat"
                     component={Chat}
@@ -112,19 +112,34 @@ export default function App() {
                         headerTitleAlign: 'center'
                     })}
                 />
-
                 <Stack.Screen
                     name="Welcome"
                     component={Welcome}
                     options={{headerShown: false}}
                 />
-
-                {/* Adiciona a tela de agendamentos */}
                 <Stack.Screen
                     name="Appointments"
                     component={Appointments}
                     options={{
                         title: 'Agendar Serviço',
+                        headerTitleAlign: 'center',
+                        headerTitleStyle: { fontWeight: 'bold' }
+                    }}
+                />
+                <Stack.Screen
+                    name="Portfolio"
+                    component={Portfolio}
+                    options={{
+                        title: 'Portfólio',
+                        headerTitleAlign: 'center',
+                        headerTitleStyle: { fontWeight: 'bold' }
+                    }}
+                />
+                <Stack.Screen
+                    name="AdminPortfolio"
+                    component={AdminPortfolio}
+                    options={{
+                        title: 'Gerenciar Portfólio',
                         headerTitleAlign: 'center',
                         headerTitleStyle: { fontWeight: 'bold' }
                     }}

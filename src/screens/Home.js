@@ -86,6 +86,7 @@ import * as Animatable from 'react-native-animatable';
 
 export default function Home({ navigation }) {
   const [usuarios, setUsuarios] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false); // Estado para verificar se é administrador
 
   const logoutUsuario = async () => {
     autenticacao.signOut().then(() => {
@@ -97,6 +98,12 @@ export default function Home({ navigation }) {
     const currentUser = autenticacao.currentUser;
 
     if (!currentUser) return () => {}; // Verifica se o usuário está autenticado
+
+    if (currentUser.email === 'blackstudio@gmail.com') {
+      setIsAdmin(true); // Define que o usuário é administrador
+    } else {
+      setIsAdmin(false);
+    }
 
     const docsRef = collection(db, 'usuarios');
     let q;
@@ -128,75 +135,82 @@ export default function Home({ navigation }) {
 
   return (
     <>
-    <View style={styles.container}>
-      <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
-                  <Text style={styles.message}>Entre em contato</Text>
-      </Animatable.View>
+      <View style={styles.container}>
+        <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
+          <Text style={styles.message}>Entre em contato</Text>
+        </Animatable.View>
 
-
-    <View style={styles.containerList}>
-    <FlatList
-        data={usuarios}
-        keyExtractor={(item) => item.email}
-        renderItem={({ item }) => (
-            <Listitem
+        <View style={styles.containerList}>
+          <FlatList
+            data={usuarios}
+            keyExtractor={(item) => item.email}
+            renderItem={({ item }) => (
+              <Listitem
                 onPress={() =>
-                    navigation.navigate('Chat', {
-                      name: item.nomedeusuario,
-                      uid: item.idusuario,
-                    })
+                  navigation.navigate('Chat', {
+                    name: item.nomedeusuario,
+                    uid: item.idusuario,
+                  })
                 }
                 title={item.nomedeusuario}
                 subTitle={item.email}
                 image={item.avatarURL}
+              />
+            )}
+          />
+        </View>
+
+        <Animatable.View animation="fadeInUp" style={styles.buttonContainer}>
+          <Button title="Agendar Serviço" onPress={() => navigation.navigate('Appointments')} buttonStyle={styles.button} />
+          <Button title="Ver Portfólio" onPress={() => navigation.navigate('Portfolio')} buttonStyle={styles.button} />
+          {isAdmin && (
+            <Button
+              title="Admin Portfólio"
+              onPress={() => navigation.navigate('AdminPortfolio')}
+              buttonStyle={styles.button}
             />
-        )}
-    />
-    </View>
-    <Animatable.View animation='fadeInUp' style={styles.buttonContainer}>
-      <Button title="Agendar Serviço" onPress={() => navigation.navigate('Appointments')} buttonStyle={styles.button} />
-      <Button title="Desconectar da Conta" onPress={logoutUsuario} buttonStyle={styles.button} />
-    </Animatable.View>
-    </View>
-</>
+          )}
+          <Button title="Desconectar da Conta" onPress={logoutUsuario} buttonStyle={styles.button} />
+        </Animatable.View>
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#000000',
-    },
-    containerHeader: {
-      marginTop: '14%',
-      marginBottom: '8%',
-      paddingStart: '5%',
+  container: {
+    flex: 1,
+    backgroundColor: '#000000',
   },
-    containerList: {
-     
-        flex:3,
-        backgroundColor: '#000000',
-        
-
-    },
-    buttonContainer: {
-      paddingTop: '5%',
-      backgroundColor: '#FFF',
-      flex: 1,
-      borderTopLeftRadius: 25,
-      borderTopRightRadius: 25,
-      paddingStart: '5%',
-      paddingEnd: '5%',
-    },
-    button: {
-        backgroundColor: '#142E66',
-        borderRadius: 4,
-        marginTop: 10,
-        marginHorizontal: 5,
-    },
-    message: {
-      fontSize: 28,
-      fontWeight: 'bold',
-      color: '#FFF',
+  containerHeader: {
+    marginTop: '14%',
+    marginBottom: '8%',
+    paddingStart: '5%',
+  },
+  containerList: {
+    flex: 2,
+    backgroundColor: '#000000',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    paddingTop: '5%',
+    backgroundColor: '#FFF',
+    flex: 1,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    paddingStart: '5%',
+    paddingEnd: '5%',
+  },
+  button: {
+    backgroundColor: '#142E66',
+    borderRadius: 4,
+    marginTop: 10,
+    marginHorizontal: 5,
+  },
+  message: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#FFF',
   },
 });

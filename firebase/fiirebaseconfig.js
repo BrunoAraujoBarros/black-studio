@@ -80,6 +80,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, initializeAuth, getReactNativePersistence } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";  // Importar o Firebase Storage
 import { Platform } from 'react-native'; // Importa o Platform
 
 // Configuração do Firebase
@@ -95,6 +96,9 @@ const firebaseConfig = {
 // Inicialize o Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+
+// Inicializa o Storage do Firebase e exporta
+export const storage = getStorage(app); // Aqui está a adição do Storage
 
 // Verifique a plataforma para inicializar o Auth corretamente
 export const autenticacao = Platform.OS === 'web'

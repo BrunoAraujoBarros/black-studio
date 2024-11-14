@@ -174,10 +174,8 @@ const styles = StyleSheet.create({
   },
     containerList: {
      
-        flex:2,
+        flex:3,
         backgroundColor: '#000000',
-        justifyContent:'center',
-        alignItems: 'center',
         
 
     },

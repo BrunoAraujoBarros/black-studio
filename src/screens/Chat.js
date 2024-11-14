@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useState, useCallback, useEffect } from 'react';
-import { GiftedChat, Send } from 'react-native-gifted-chat';
+import { GiftedChat, Send, Bubble } from 'react-native-gifted-chat';
 import { autenticacao, db } from '../../firebase/fiirebaseconfig';
 import { addDoc, collection, doc, orderBy, serverTimestamp, query, onSnapshot } from 'firebase/firestore';
+import * as Animatable from 'react-native-animatable';
 
 export default function Chat({ route }) {
     const { uid } = route.params || {};
@@ -58,23 +59,58 @@ export default function Chat({ route }) {
             </View>
         </Send>
     );
+    const renderBubble = (props) => {
+        return (
+            <Bubble
+                {...props}
+                wrapperStyle={{
+                    right: {
+                        backgroundColor: '#142E66', // Cor das mensagens enviadas
+                    },
+                    left: {
+                        backgroundColor: '#1a1a1a', // Cor das mensagens recebidas
+                    },
+                }}
+                textStyle={{
+                    right: {
+                        color: '#fff', // Cor do texto das mensagens enviadas
+                    },
+                    left: {
+                        color: '#fff', // Cor do texto das mensagens recebidas
+                    },
+                }}
+            />
+        );
+    };
 
     return (
+        <View style={styles.container}>
+            <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
+                  <Text style={styles.message}>Black Studio</Text>
+             </Animatable.View>
+       
         <GiftedChat
+        
             messages={messages}
             onSend={(text) => onSend(text)}
             user={{ _id: currentUser }}
             placeholder="Digite uma mensagem..."
             renderSend={renderSend}
+            renderBubble={renderBubble}
         />
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#000000',
+    },
     sendButton: {
         marginRight: 10,
         marginBottom: 5,
-        backgroundColor: '#007AFF',
+        backgroundColor: '#142E66',
         borderRadius: 20,
         paddingVertical: 5,
         paddingHorizontal: 15,
@@ -82,5 +118,16 @@ const styles = StyleSheet.create({
     sendButtonText: {
         color: '#fff',
         fontWeight: 'bold',
+    },
+    message: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        color: '#FFF',
+        textAlign: 'center',
+    },
+    containerHeader: {
+        marginTop: '14%',
+        marginBottom: '8%',
+        paddingStart: '5%',
     },
 });

@@ -105,6 +105,7 @@ export default function App() {
                     name="Chat"
                     component={Chat}
                     options={({route}) => ({
+                        headerShown: false ,
                         headerBackVisible: false,
                         title: route.params.name,
                         headerTitleStyle: { fontWeight: 'bold' },
